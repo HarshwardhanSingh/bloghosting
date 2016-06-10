@@ -1,0 +1,32 @@
+.row 
+	.col-md-6.col-md-offset-3{style: 'text-align:center;'}
+		/ %h3= current_user.profession.name
+		/ .stats= pluralize(Profession.where(name: current_user.profession.name).all.count,"Member")
+		/ %hr	
+.row{style: 'margin-top:4rem;'}
+	.col-md-6{style: 'border-right:3px solid #e9e9e9;'}
+		.Posts#Posts{style: 'width:90%;margin-left:auto;margin-right:auto;margin-top:-2rem;'}
+			.Feed-header
+				.pull-left{style: 'font-size:1.8em;'}
+					Stories
+					%button{type: "button", class: "btn btn-info btn-sm",data:{toggle:"modal",target:"#newPostModal"},style: 'border-radius:0px;'}
+						= fa_icon('pencil')
+				.desc.pull-right{style: 'font-size: 0.8em;background-color: #e9e9e9;padding: 1rem;'} From People You Follow
+			.Feed-body#Posts_feed_body{style: 'margin-top:3rem;padding-top:6rem;'}
+				= render partial: 'posts/post',collection: @posts
+			#loader
+				#anime
+			= link_to "Load More Posts",'#',remote: true,class: "load_more_dash",onclick: "load_more_dash()",style: 'display: block;text-align: center;background-color: #ffffff;line-height: 3;margin: 3rem auto;box-shadow: 0 0 3px 1px #efeeee;'
+	.col-md-6
+		.Posts#Posts{style: 'width:90%;margin-left:auto;margin-right:auto;margin-top:-2rem;'}
+			.Feed-header
+				.pull-left{style: 'font-size:1.8em;'} Popular Now
+				.desc.pull-right{style: 'font-size: 0.8em;background-color: #e9e9e9;padding:1rem;'} From Blogs You Follow
+			.Feed-body{style: 'margin-top:3rem;padding-top:6rem;'}
+				= render partial: 'articles/article', collection: @articles
+			#loader
+				#anime
+			= link_to "Load More Posts",'#',remote: true
+
+
+

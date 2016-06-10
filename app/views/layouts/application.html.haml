@@ -1,0 +1,66 @@
+!!! 5
+%html
+%head
+  %title InnFact.com
+  = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true
+  = javascript_include_tag 'application', 'data-turbolinks-track' => true
+  = javascript_include_tag 'http://malsup.github.com/jquery.form.js', 'data-turbolinks-track' => true
+  = csrf_meta_tags
+
+%body
+  %nav.navbar-default.navbar-fixed-top
+    .container
+      - if request.original_url != 'http://localhost:3000/'
+        .navbar-header
+          = link_to "InnFact",root_path,class:'navbar-brand'
+          %button{type: "button",class: "navbar-toggle collapsed", data:{toggle: "collapse",target: "#navbar-top-collapse"}, aria:{expanded:"false"}}
+            %span.sr-only Toggle navigation
+            %span.icon-bar
+            %span.icon-bar
+            %span.icon-bar
+      .collapse.navbar-collapse#navbar-top-collapse
+        .nav.navbar-nav{style: 'width:50%;'}
+          = search_form_for @q,url: explore_path,html:{method: :post,class: 'navbar-form',style: 'border-color:transparent;'} do |f|
+            = f.search_field :username_or_email_cont,class: 'form-control',placeholder: "Search"
+            = f.submit "Search",class: 'btn btn-default'
+        %ul.nav.navbar-nav.navbar-right
+          - if user_signed_in?
+            %li= link_to fa_icon('home lg'),dashboard_path,data:{toggle: "tooltip",placement: "bottom", title: "Dashboard"}
+            %li= link_to fa_icon('search lg'),explore_path,data:{toggle: "tooltip",placement: "bottom", title: "Explore"}
+            %li
+              %a#noticeBell{href: all_notifications_path,data:{toggle: "tooltip",placement: "bottom", title: "Notifications"}}
+                = fa_icon('bell lg')
+                %span.badge#notification
+            %li.dropdown
+              = link_to fa_icon('bars',text: 'Navigator'),'#',remote: true,class: 'dropdown-toggle',data:{toggle: 'dropdown'}
+              %ul.dropdown-menu
+                %li= link_to "Account",edit_user_registration_path
+                %li= link_to "Settings"
+                %li= link_to "Sign Out",destroy_user_session_path,method: :delete
+          -else
+            %li= link_to fa_icon('',text: 'Sign In'),new_user_session_path
+            %li= link_to fa_icon('',text: 'Register'),new_user_registration_path
+  - if !notice.blank?
+    .notice
+      %p= notice
+  - if !alert.blank?
+    .alert
+      %p= alert
+  - if request.original_url == 'http://localhost:3000/'
+    = yield
+  - else
+    .container
+      = yield
+
+  - if user_signed_in?
+    #newPostModal.modal.fade{role:"dialog"}
+      .modal-dialog
+        .modal-content{style: 'border-radius: 0;'}
+          .modal-header
+            %button.close{type: "button",data:{dismiss: "modal"}}
+              &times;
+            .modal-title
+            %h4{style: 'text-align: center;'} Compose Post
+          .modal-body{style: 'margin-bottom: 4rem;'}
+            = render partial: 'posts/form'
+          .model-footer

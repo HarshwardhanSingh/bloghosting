@@ -1,0 +1,8 @@
+#Container{style: 'width:80%;text-align:center;margin-left:auto;margin-right:auto;'}
+	= image_tag(@user.avatar.url(:large),class: 'img-responsive img-circle',style: 'text-align:center;margin-left:auto;margin-right:auto;display:block;')
+	%h4
+		Hi #{@user.username.capitalize} !!
+
+	%h4 Tell Us Something About Yourself
+	= simple_form_for(@user,html:{url: save_bio_path,method: :Post}) do |f|
+		= f.input :avatar,label: false,style:{'display:none;'}

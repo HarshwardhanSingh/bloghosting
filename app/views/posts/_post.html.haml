@@ -1,0 +1,38 @@
+.Post{id: post.id,data:{id: post.id}}
+  .Post-header
+    .row.Post-info
+      .col-xs-2
+        = image_tag(post.user.avatar.url("small"),class: 'img-circle')
+      .col-xs-8{style: 'margin-left:-6%;'}
+        %span.username
+          = link_to post.user.username.capitalize,sketchbook_path(username: post.user.username)
+        %br
+        %span.time_ago= time_ago_in_words(post.created_at)
+      .col-xs-2{style: 'text-align:right;padding-right:0%;'}
+        - if post.user_id == current_user.id
+          .dropdown
+            = link_to fa_icon('bars'),'#',data:{toggle: 'dropdown'},class: 'dropdown-toggle'
+            %ul.dropdown-menu
+              %li= link_to "Destroy Post",'#',remote: true,onclick: "destroyPost(#{post.id})"
+  .Post-body
+    -if !post.title.nil?
+      %h4= post.title
+    %p= post.content
+    - if post.image.exists?
+      = image_tag(post.image.url(:large),class: 'img-responsive')
+  .Post-footer
+    .Action-bar
+      .row
+        .col-xs-6
+          - if user_signed_in? and post.user.id!=current_user.id
+            - if user_signed_in? and !current_user.likes?(post)
+              = link_to fa_icon('heart-o lg',text: 'Like'),'#',class: 'btn btn-default btn-sm like',onclick: "likePost(#{post.id})",data:{toggle: "tooltip",placement: "top", title: "Like",remote: true,id: "#{post.id}"}
+            - elsif user_signed_in? and current_user.likes?(post)
+              = link_to fa_icon('heart lg',text: 'Liked'),'#',class: 'btn btn-danger btn-sm unlike',onclick: "unlikePost(#{post.id})",data:{toggle: "tooltip",placement: "top", title: "Unlike",remote: true,id: "#{post.id}"}
+          - elsif user_signed_in? and post.user.id=current_user.id
+            = link_to fa_icon('heart lg',text: "#{post.likers(User).count} Hearts"),'#',class: 'disabled btn btn-primary btn-sm'
+        .col-xs-6{style: 'text-align:right;line-height:2;'}
+          %span= fa_icon('heart',text: "#{post.likers(User).count}")
+          %span= fa_icon('comment',text: post.comments.count)
+    .Comment-form{style: 'margin-top: 3rem;margin-bottom: -1rem;'}
+      = render partial: 'comments/form',locals:{commentable: post}

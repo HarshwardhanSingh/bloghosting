@@ -1,0 +1,1 @@
+$('a.unlike[data-id=<%= @post.id %>]').removeClass('btn-danger unlike').addClass('btn-default like').html('<%= fa_icon("heart-o lg",text: "Like")%>').attr('onclick','likePost(<%= @post.id%>)');

@@ -1,0 +1,6 @@
+<% if @Ncounter > 0 %>
+	$('a#noticeBell').css('color','#ffffff');
+	$('span#notification').css('display','inline-block').html('<%= @Ncounter %>');
+<% else %>
+	$('span#notification').css('display','none');
+<% end %>

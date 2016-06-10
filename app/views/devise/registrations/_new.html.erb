@@ -1,0 +1,29 @@
+<%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+  <%= f.error_notification %>
+
+  <fieldset id="profession">
+  <div class="form-group">
+    <%= f.association :profession,label: "Select Profession",:include_blank => true, disabled: "", selected: "", placeholder: "Foo Bar" %>
+  </div>
+  <div class="form-group">
+    <%= link_to "Proceed",'#',remote: true,onclick: 'signup_proceed()',class: 'btn btn-primary btn-proceed'%>
+  </div>
+  </fieldset>
+  <fieldset id="register-form" style= "display:none;">
+    
+  <div class="form-inputs">
+    <div class="form-group">
+    <%= f.input :username,label: false, required: true,input_html:{placeholder: "Username",onBlur: 'checkUsernameAvailability()'}, autofocus: true %>
+    <span id="user-availability-status" class="pull-right" style= 'display:none;'>
+    </span>
+    </div>
+    <%= f.input :email,label: false, required: true,input_html:{placeholder: "Email"} %>
+    <%= f.input :password,label: false, required: true,input_html:{placeholder: "Password"} %>
+    <%= f.input :password_confirmation,label: false,input_html:{placeholder: "Confirm Password"}, required: true %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit, "Sign Up",class: 'sign-up-in-btn' %>
+  </div>
+  </fieldset>
+<% end %>

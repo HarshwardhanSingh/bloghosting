@@ -1,0 +1,11 @@
+= simple_form_for([@blog,@article],html:{multipart: 'true',class: 'Article-form'}, :validate => true) do |f|
+	= f.error_notification
+	.form-group
+		= f.input :title,label: false,input_html: {placeholder: 'Title [Optional]'}
+	.form-group
+		= f.input :content,label: false,input_html: {placeholder: 'Start Writing here...'}
+		= f.input :image,label: false,style: 'display:none;'
+	%img#blah.img-responsive{src: '#',style: 'margin: 3rem 0;display: none;'}
+	.form-actions
+		= link_to fa_icon('camera lg',text: "Add Image"),'#',remote: true,class: 'btn btn-primary attach-image-trigger'
+		= f.submit "Post to #{@blog.name.capitalize}",class: 'btn btn-success pull-right'

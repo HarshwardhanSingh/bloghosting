@@ -1,0 +1,17 @@
+= simple_form_for([commentable,Comment.new], html:{class: 'comment-form',id: commentable.id}) do |f|
+  .form-group
+    = f.input :content,label: false,as: :string,input_html:{placeholder: "Say it"}
+  .form-actions{style: 'display: none;'}
+    = f.submit "Post Comment"
+
+
+
+
+
+
+
+/ = simple_form_for([post,@comment], html:{url: new_post_comment_path(post),remote: true,class: 'comment-form',id: post.id}) do |f|
+/   .form-group
+/     = f.input :content,label: false,as: :string,input_html:{placeholder: "Say it"}
+/   .form-actions{style: 'display: none;'}
+/     = f.submit "Post Comment"

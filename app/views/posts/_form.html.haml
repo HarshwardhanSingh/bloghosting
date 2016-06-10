@@ -1,0 +1,14 @@
+= simple_form_for(@post,html:{multipart: true,class: 'post-form'}, :validate => true) do |f|
+  = f.error_notification
+  .form-group{style: 'position:relative;'}
+    = f.input :title,label: false,input_html:{placeholder: "Title",class: 'form-control'}
+    = link_to fa_icon("plus"),'#',remote: true,onclick: 'ShowTitle()',class: 'title-trigger',data:{toggle: "tooltip",placement: "left", title: "Add Title"}
+    = link_to fa_icon("times"),'#',remote: true,onclick: 'HideTitle()',class: 'title-trigger-hide cross',data:{toggle: "tooltip",placement: "left", title: "Remove Title"}
+  .form-group
+    = f.input :content,label: false,input_html:{placeholder:'Content',class: 'form-control'}
+  .form-group
+    = f.input :image,label: false,input_html:{accept: "image/x-png, image/gif, image/jpeg"}
+  %img#blah.img-responsive{src: '#',style: 'margin: 3rem 0;display: none;'}
+  .form-actions
+    = link_to fa_icon('camera lg',text: "Add Image"),'#',remote: true,class: 'attach-image-trigger pull-left'
+    = f.submit "Post as #{current_user.username.capitalize}",class: 'btn btn-primary pull-right'

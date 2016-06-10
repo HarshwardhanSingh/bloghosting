@@ -1,0 +1,18 @@
+.row
+	.col-md-3
+		%h3 Explore
+	.col-md-3.pull-right{style: 'text-align:center;line-height:4;'}
+		.blogs-opt{style: 'display:inline-block;padding-right:1rem;'}
+			%h5= link_to "Blogs",'#'
+		.users-opt{style: 'display:inline-block;border-left: 2px solid #e9e9e9;text-align:right;padding-left:1rem;'}
+			%h5= link_to "Users",'#'
+%hr{style: 'margin-top:0;'}
+
+.row
+	.col-md-10.col-md-offset-1
+		- if @users.present?
+			= render partial: 'pages/user',collection: @users
+		- else
+			.Nothing-found{style: 'display:block;width:50%;margin-left:auto;margin-right:auto;text-align:center;color:#848484;'}
+				%h4 Ahhhh... This Search Returned Nothing
+				= fa_icon('frown-o 2x')

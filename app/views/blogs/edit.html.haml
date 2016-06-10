@@ -1,0 +1,23 @@
+.row
+	.col-md-3{style: 'text-align:center;'}
+		= image_tag(@blog.avatar.url(:large),class: 'img-thumbnail',style: 'display:block;margin-left:auto;margin-right:auto;width:auto;')
+		%h4= link_to @blog.name.capitalize,page_path(link: @blog.link)
+	.col-md-6{style: 'border-left:3px solid #e9e9e9;'}
+		%h3 Control Panel
+		%hr		
+		= simple_form_for(@blog,html: {multipart: true,class: 'blog-form'}) do |f|
+			.form-group
+				= f.input :name,label: "Name",input_html:{placeholder: "NAME YOUR BLOG"}
+			.form-group
+				= f.input :desc,label: "Description",input_html:{placeholder: 'Short Bio about your blog'}
+			.form-group
+				= f.association :category
+			.form-group
+				%span 
+					%label Link
+				%br
+				%span http://innfact.com/
+				%span= f.input :link,label: false,input_html:{placeholder: 'CHOOSE A URL',onBlur: "checkAvailability()"}
+				%span#user-availability-status.pull-right{style: 'display:none;margin: 1rem 0;'}
+			.form-actions
+				= f.submit "Update Blog",class: 'btn btn-warning',style: 'width:100%;text-align:center;line-height:2;'

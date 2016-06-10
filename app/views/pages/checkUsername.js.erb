@@ -1,0 +1,9 @@
+<% if @data.nil? %>
+	$('input[type="text"]#user_username').css('border','1px solid #0F9429');
+	$('span#user-availability-status').css('display','inline-block').css('color','#0F9429').css('margin-top','-1rem').css('margin-bottom','1rem').css('padding','0');
+	$('span#user-availability-status').html("<%= @message %>");
+<% else %>
+	$('input[type="text"]#user_username').css('border','1px solid red');
+	$('span#user-availability-status').css('display','inline-block').css('color','#E43E3E').css('margin-top','-1rem').css('margin-bottom','1rem').css('padding','0');
+	$('span#user-availability-status').html("<%= @message %>");
+<% end %>

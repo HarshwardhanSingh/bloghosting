@@ -1,0 +1,25 @@
+!!! 5
+%html
+%head
+  %title InnFact.com
+  = stylesheet_link_tag    'blog', media: 'all', 'data-turbolinks-track' => true
+  = javascript_include_tag 'application', 'data-turbolinks-track' => true
+  = javascript_include_tag 'http://malsup.github.com/jquery.form.js', 'data-turbolinks-track' => true
+  = csrf_meta_tags
+
+%body
+  %nav.navbar-default.navbar-fixed-top
+    .container
+      .navbar-header
+        = link_to "InnFact",root_path,class:'navbar-brand'
+        %button{type: "button",class: "navbar-toggle collapsed", data:{toggle: "collapse",target: "#navbar-top-collapse"}, aria:{expanded:"false"}}
+          %span.sr-only Toggle navigation
+          %span.icon-bar
+          %span.icon-bar
+          %span.icon-bar
+      .collapse.navbar-collapse#navbar-top-collapse
+        %ul.nav.navbar-nav.navbar-right
+          %li= link_to fa_icon('',text: 'Sign In'),new_user_session_path
+          %li= link_to fa_icon('',text: 'Sign Up to Follow'),new_user_registration_path,style: 'border:1px solid;'
+  .container
+    = yield

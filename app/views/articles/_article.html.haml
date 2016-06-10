@@ -1,0 +1,39 @@
+.Article{id: article.id,data:{id: article.id}}
+  .Article-header
+    .row.Article-info
+      .col-xs-2
+        = image_tag(article.blog.avatar.url("small"),class: 'img-circle')
+      .col-xs-9{style: 'margin-left:-4%;'}
+        %span.blogname
+          = link_to article.blog.name.capitalize,page_path(link: article.blog.link)
+        %br
+        %span.time_ago= time_ago_in_words(article.created_at)
+      .col-xs-1{style: 'text-align:right;padding-right:0%;'}
+        - if article.blog.user.id == current_user.id
+          .dropdown
+            = link_to fa_icon('bars'),'#',data:{toggle: 'dropdown'},class: 'dropdown-toggle'
+            %ul.dropdown-menu
+              %li= link_to "Destroy Article",'#',remote: true,onclick: "destroyArticle(#{article.id})"
+  .Article-body
+    -if !article.title.nil?
+      %h4= article.title
+    %p= article.content
+    - if article.image.exists?
+      = image_tag(article.image.url(:large),class: 'img-responsive')
+  .Article-footer
+    .Action-bar
+      .row
+        .col-xs-6
+          - if user_signed_in?
+            - if current_user.voted_for? article
+              = link_to fa_icon('arrow-down'),downvote_blog_article_path(blog_id: article.blog.id,id: article.id),class: 'btn btn-default'
+            - else
+              = link_to fa_icon('arrow-up'),upvote_blog_article_path(blog_id: article.blog.id,id: article.id),class: 'btn btn-default'
+              = link_to fa_icon('arrow-down'),downvote_blog_article_path(blog_id: article.blog.id,id: article.id),class: 'btn btn-default'
+          - else
+            = link_to "Sign Up To Vote",new_user_registration_path,class: 'btn btn-warning'
+        .col-xs-6{style: 'text-align:right;line-height:2;'}
+          %span= fa_icon('arrow-up lg',text: "#{article.get_downvotes.size}")
+          %span= fa_icon('comment lg',text: "#{article.comments.count}")
+    .Comment-form{style: 'margin-top: 3rem;margin-bottom: -1rem;'}
+      = render partial: 'comments/form',locals:{commentable: article}

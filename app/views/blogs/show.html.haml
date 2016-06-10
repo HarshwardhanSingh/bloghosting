@@ -1,0 +1,62 @@
+
+.row#body{style: 'margin-top:3rem;'}
+  .col-md-3.hidden-sm.hidden-xs{style: 'text-align:center;'}
+    .blogAvatar{style: 'position:relative;'}
+      = image_tag(@blog.avatar.url(:large),class: 'img-rounded',id: 'blogAvatar',style: 'border: 1px solid #e9e9e9;position:relative;',data:{toggle: "tooltip",placement: "top", title: "#{@blog.name.capitalize}"})
+      - if user_signed_in? and @blog.user.username == current_user.username
+        %span= link_to fa_icon('camera lg'),'#',remote: true,onclick: "update_blog_avatar(#{@blog.id})",id: 'update-blog-avatar-trigger',class: 'update-avatar-trigger',data:{toggle: "tooltip",placement: "bottom", title: "Change Avatar"}
+        = form_for @blog,url: update_blog_avatar_path(@blog.id), html:{remote: true,class: 'update-avatar',method: :patch,multipart: true} do |f|
+          = f.file_field :avatar
+          = f.submit "Upload"
+    %h4= link_to @blog.name.capitalize
+    %table.table{style: 'margin-top:3rem;'}
+      %tr 
+        %td 
+          %b Category
+        %td= @blog.category.name
+      %tr
+        %td 
+          %b From
+        %td= fa_icon('map-marker',text: "India")
+      %tr  
+        %td 
+          %b Started
+        %td= fa_icon('clock-o',text:"Jan 2015")
+
+  .col-md-6{style: 'border-left:2px solid #e9e9e9;min-height:100vh;border-right:2px solid #e9e9e9;'}
+    - if @articles.blank?
+      .EmptyDiv{style: 'text-align:center;color:#989898;font-size:1.1em;'}
+        - if user_signed_in? and @blog.user.username==current_user.username
+          %h4
+            #{fa_icon('frown-o lg')} Nothing to show here  
+          = link_to "Compose Post",new_blog_article_path(@blog),style: {color: '#989898'}
+        - else
+          %h4
+            #{fa_icon('frown-o lg')} Nothing to show here 
+    - else
+      .Posts#Posts{style: 'width:90%;margin-left:auto;margin-right:auto;margin-top:-2rem;'}
+        .InFo{style: 'display:block;background-color:#ffffff;box-shadow:0 0 3px 1px #efeeee;padding:1rem;text-transform:uppercase;'}
+          .FoLlowers{style: 'text-align:center;display:inline-block;width:49%;'}
+            = link_to pluralize(@blog.followers(User).count,"Subscriber"),get_subscribers_path(link: @blog.link),data:{toggle: "tooltip",placement: "bottom", title: "Followers"}
+          .ArticleCounter{style: 'text-align:center;display:inline-block;width:49%;'}
+            = link_to pluralize(@blog.articles.count,"Article"),'#',data:{toggle: "tooltip",placement: "bottom", title: "Articles"}
+        = render partial: 'articles/article',collection: @articles
+        #loader
+          #anime
+        = link_to "Load More Posts",'#',remote: true,class: 'load-more',data:{id: @blog.name}
+  .col-md-3.hidden-sm.hidden-xs
+    .Follow-field{style: 'margin-bottom:3rem;'}
+      - if user_signed_in?
+        - if current_user.follows?(@blog) and current_user.id != @blog.user.id
+          = link_to "Following",unsubscribe_blog_path(@blog.id),class: 'btn btn-unfollow'
+        - elsif !current_user.follows?(@blog) and current_user.id != @blog.user.id
+          = link_to "Follow",subscribe_blog_path(@blog.id),class: 'btn btn-follow'
+        - elsif @blog.user.id == current_user.id
+          = link_to "New Post",new_blog_article_path(@blog),class: 'new-post-btn',data:{toggle: "tooltip",placement: "bottom", title: "Compose Post"}
+          %br
+          = link_to "Control Panel",edit_blog_path(@blog),class: 'btn',data:{toggle: "tooltip",placement: "bottom", title: "Control Panel"},style: 'line-height: 2;width:100%;text-align:center;display:block;background-color:#d9534f;color:#ffffff;border-radius:0px;'
+      - else
+        = link_to "Sign Up To Follow",new_user_registration_path,class: 'btn btn-warning',style: 'width:100%;display:block;text-align:center;'
+        %br
+        %br
+        = link_to "Post to Author",new_user_registration_path,class: 'btn btn-info',style: 'width:100%;display:block;text-align:center;'

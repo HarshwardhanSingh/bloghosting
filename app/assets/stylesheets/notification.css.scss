@@ -1,0 +1,29 @@
+p.notification
+{
+	padding: 1rem;
+	border-bottom: 1px solid #efeeee;
+
+	a.notice-destroy
+	{
+		color: #898989;
+		background-color: transparent;
+		border-radius: 2em;
+		text-align: center;
+		display: block;
+		width: 20px;
+		line-height: 1.5;
+		height: 20px;
+
+		&:hover
+		{
+			color: #FDFDFD;
+			background-color: #CA3F7B;
+			border-radius: 2em;
+			text-align: center;
+			display: block;
+			width: 20px;
+			line-height: 1.5;
+			height: 20px;
+		}
+	}
+}

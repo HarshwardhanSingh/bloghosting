@@ -1,0 +1,139 @@
+@import "bootstrap-sprockets";
+@import "bootstrap";
+@import "font-awesome";
+@import url(http://fonts.googleapis.com/css?family=Roboto);
+
+body
+{
+  margin-top:70px;
+  background-color: #fdfdfd;
+  font-family: 'Roboto', sans-serif;
+}
+
+#loader{
+  text-align: center;
+  margin: 3rem auto;
+  display: none;
+  width: 100%;
+  height: 100px;
+  position: absolute;
+  bottom: -8rem;
+  left: 0px;
+  #anime{
+  width: 50px;
+  height: 50px;
+  margin: 3rem auto;
+  background-color: #38b0a4;
+  position: relative;
+  -webkit-animation-name: example; /* Chrome, Safari, Opera */
+  -webkit-animation-duration: 4s; /* Chrome, Safari, Opera */
+  animation-name: example;
+  animation-duration: 10s;
+  }
+}
+span.time_ago
+{
+  color:#868686;
+  font-size: .9em;
+}
+a.btn-follow
+{
+  width:150px;
+  text-transform: capitalize;
+  border:2px solid #2DA24C;
+  background-color: transparent;
+  color:#2DA24C;
+  border-radius: 0rem !important;
+}
+a.btn-unfollow
+{
+  width:150px;
+  text-transform: capitalize;
+  border-color: transparent;
+  background-color: #2DA24C;
+  color:#ffffff;
+  border-radius: 0rem !important;
+}
+a.btn-follow:hover,a.btn-unfollow:hover
+{
+  color: #ffffff;
+  letter-spacing: 1px;
+  background-color: #2DA24C;
+}
+#Links
+{
+  margin-top: 3rem;
+  a,a:active,a:visited,a:hover
+  {
+    color: #E61E66;
+    text-decoration: none;
+  }
+}
+a.cross
+{
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  text-align: center;
+  line-height: 1.5;
+  color: rgb(255, 255, 255);
+  width: 20px;
+  height: 20px;
+  padding-left: 1px;
+  background-color: #FB0009;
+}
+a.subscribe,a.unsubscribe,a.subscribe:hover,a.unsubscribe:hover
+{
+  color:#ffffff;
+  text-decoration: none;
+}
+
+
+// Top navbar style Start
+nav.navbar-default
+{
+  background: #558EAB;
+  color:#ffffff;
+  box-shadow: 0 0 3px 1px rgba(117, 117, 117, 0.47);
+  .container
+  {
+    a,a:hover,a:visited,a:active
+    {
+      font-size: 1em;
+      color:#ffffff;
+    }
+    .navbar-header
+    {
+      a.navbar-brand
+      {
+        font-size: 2em;
+        color:#ffffff;
+        text-decoration: none;
+      }
+    }
+    ul.navbar-nav
+    {
+      li
+      {
+        a
+        {
+          color: #366075;
+        }
+        a:hover
+        {
+          color: #ffffff;
+        }
+      }
+    }
+    ul.dropdown-menu
+    {
+      // background-color: #38B0A4;
+      // border-color: #38B0A4;
+      a
+      {
+        background-color: #ffffff;
+        color: #529AAB;
+      }
+    }
+  }
+}

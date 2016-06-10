@@ -1,0 +1,12 @@
+.row
+	.col-md-6.col-md-offset-3
+		= render partial: 'post',locals:{post: @post}
+		- @comments.each do |comment|
+			.row{style: 'background-color:#ffffff;box-shadow: 0 0 3px 1px #efeeee;margin:1rem 0;padding: 1rem .5rem;'}
+				.col-xs-2
+					= image_tag(comment.user.avatar.url(:small),class: 'img-circle')
+				.col-xs-10{style: 'margin-left:-3.5rem;'}
+					%span= link_to comment.user.username,sketchbook_path(username: comment.user.username)
+					%span{style: 'margin-left:1rem;'}= comment.content
+					%br
+					%span.time_ago= time_ago_in_words(comment.created_at)				

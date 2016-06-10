@@ -1,0 +1,2 @@
+$("a.btn-unfollow[data-id = <%= @user.id %>]").removeClass('btn-unfollow').addClass('btn-follow').text('Follow').attr('href','<%= follow_user_path(@user.id) %>');
+// alert("HELLo");

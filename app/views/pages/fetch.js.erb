@@ -1,0 +1,7 @@
+$('#Posts_feed_body').append('<%= escape_javascript(render(:partial => @posts)) %>');
+<% if @posts.empty? %>
+	$('a.load_more_dash').attr('data-id','none');
+	$('a.load_more_dash').css('display','none');
+	$('#loader').hide();
+<% end %>
+$('#loader').hide();

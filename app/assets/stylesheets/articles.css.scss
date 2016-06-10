@@ -1,0 +1,49 @@
+form.Article-form
+{
+	input[type="file"]#article_image
+	{
+		display: none !important;
+	}
+}
+.Article
+{
+	background-color: #ffffff;
+    padding: 1rem;
+    box-shadow: 0 0px 3px 1px #efeeee;
+    margin: 2rem 0;
+
+	.Article-header
+	{
+
+	}
+	.Article-body
+	{
+		padding-top: .5rem;
+		padding-bottom: 1rem
+	}
+	.Article-footer
+	{
+		margin: 1rem 0rem;
+
+		.Action-bar
+		{
+			margin: 0 -1rem -2rem -1rem;
+			padding: 1rem 1rem 1rem 1rem;
+			// background-color: #f8f8f8;
+			border-top: 1px solid #efeeee;
+
+			span:last-of-type
+			{
+				margin-left:5%;
+			}
+		}
+		.Comment-form
+		{
+
+		}
+		.Comments
+		{
+
+		}
+	}
+}

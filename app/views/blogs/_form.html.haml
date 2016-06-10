@@ -1,0 +1,14 @@
+= simple_form_for(@blog,html: {multipart: true,class: 'blog-form'}, :validate => true) do |f|
+  = f.error_notification
+  .form-group
+    = f.input :name,label: false,input_html:{placeholder: "NAME YOUR BLOG"}
+  .form-group
+    = f.input :desc,label: false,input_html:{placeholder: 'Short Bio about your blog'}
+  .form-group
+    = f.association :category
+  .form-group
+    %span http://innfact.com/
+    %span= f.input :link,label: false,input_html:{placeholder: 'CHOOSE A URL',onBlur: "checkAvailability()"}
+    %span#user-availability-status.pull-right{style: 'display:none;'}
+  .form-actions
+    = f.submit "Create",class: 'btn btn-warning'

@@ -1,0 +1,7 @@
+<% if @data.nil? %>
+	$('span#user-availability-status').css('display','inline-block').css('background-color','#0F9429');
+	$('span#user-availability-status').html("<%= @message %>");
+<% else %>
+	$('span#user-availability-status').css('display','inline-block').css('background-color','red');
+	$('span#user-availability-status').html("<%= @message %>");
+<% end %>

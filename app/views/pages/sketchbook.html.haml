@@ -1,0 +1,59 @@
+
+.row#body{style: 'margin-top:3rem;'}
+  .col-md-3.hidden-sm.hidden-xs{style: 'text-align:center;'}
+    .userAvatar{style: 'position:relative;'}
+      = image_tag(@user.avatar.url(:large),class: 'img-rounded',id: 'userAvatar',style: 'border: 1px solid #e9e9e9;position:relative;',data:{toggle: "tooltip",placement: "top", title: "#{@user.username.capitalize}"})
+      - if user_signed_in? and @user.username == current_user.username
+        %span= link_to fa_icon('camera lg'),'#',remote: true,onclick: "update_avatar()",class: 'update-avatar-trigger',data:{toggle: "tooltip",placement: "bottom", title: "Change Avatar"}
+        = form_for @user,url: update_avatar_path, html:{remote: true,class: 'update-avatar',method: :patch,multipart: true} do |f|
+          = f.file_field :avatar
+          = f.submit "Upload"
+    %h4= link_to @user.username.capitalize
+    %table.table{style: 'margin-top:3rem;'}
+      %tr 
+        %td 
+          %b Is
+        %td= @user.profession.name
+      %tr
+        %td 
+          %b From
+        %td= fa_icon('map-marker',text: "India")
+      %tr  
+        %td 
+          %b Joined
+        %td= fa_icon('clock-o',text:"Jan 2015")
+
+  .col-md-6{style: 'border-left:2px solid #e9e9e9;min-height:100vh;border-right:2px solid #e9e9e9;'}
+    - if @posts.blank?
+      .EmptyDiv{style: 'text-align:center;color:#989898;font-size:1.1em;'}
+        - if user_signed_in? and @user.username==current_user.username
+          %h4
+            #{fa_icon('frown-o lg')} Nothing to show here  
+          = link_to "Compose Post",new_post_path,style: {color: '#989898'}
+        - else
+          %h4
+            #{fa_icon('frown-o lg')} Nothing to show here 
+    - else
+      .Posts#Posts{style: 'width:90%;margin-left:auto;margin-right:auto;margin-top:-2rem;'}
+        .InFo{style: 'display:block;background-color:#ffffff;box-shadow:0 0 3px 1px #efeeee;padding:1rem;text-transform:uppercase;'}
+          .FoLlowers{style: 'text-align:center;display:inline-block;width:49%;'}
+            = link_to pluralize(@user.followers(User).count,"Follower"),followers_path(username: @user.username),data:{toggle: "tooltip",placement: "bottom", title: "Followers"}
+          .FoLlowings{style: 'text-align:center;display:inline-block;width:49%;border-left:2px solid #e9e9e9;'}
+            = link_to pluralize(@user.followees(User).count,"Following"),followings_path(username: @user.username),data:{toggle: "tooltip",placement: "bottom", title: "Followings"}
+        = render partial: 'posts/post',collection: @posts
+        #loader
+          #anime
+        = link_to "Load More Posts",'#',remote: true,class: 'load-more-profile',data:{id: @user.username}
+  .col-md-3.hidden-sm.hidden-xs
+    .Follow-field{style: 'margin-bottom:3rem;'}
+      - if user_signed_in?
+        - if current_user.follows?(@user) and current_user.id != @user.id
+          = link_to "Following","#",onclick: "unfollow(#{@user.id})",remote: true,class: 'btn btn-unfollow',data:{id: @user.id}
+        -elsif !current_user.follows?(@user) and current_user.id != @user.id
+          = link_to "Follow","#",onclick: "follow(#{@user.id})",remote: true,class: 'btn btn-follow',data:{id: @user.id}
+        -elsif @user.id == current_user.id
+          = link_to "New Post",new_post_path,class: 'new-post-btn',data:{toggle: "tooltip",placement: "bottom", title: "Compose Post"}
+      - else
+        = link_to "Sign Up To Follow #{@user.username.capitalize}",new_user_registration_path,class: 'btn btn-warning'
+
+

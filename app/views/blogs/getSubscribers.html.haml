@@ -1,0 +1,6 @@
+- if !@users.empty?
+	%h3 Subscribers
+	= render partial: 'pages/user',collection: @users
+- else
+	#Empty{style: 'width:100%;color:#989898;text-align:center;font-size:1.6em;margin-top:10rem;'}
+		NOTHING FOUND HERE

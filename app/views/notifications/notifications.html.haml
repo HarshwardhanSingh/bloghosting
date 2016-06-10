@@ -1,0 +1,17 @@
+.row
+	.col-md-6.col-md-offset-3
+		%h4 NOTIFICATIONS
+		%br
+		%br
+		- if @notifications.present?
+			- @notifications.each do |notice|
+				%p.notification
+					= notice.notice
+					%span.pull-right{style: 'display:inline-block;'}
+						= link_to fa_icon('times'),delete_notification_path(id: notice.id),method: :delete,class: 'notice-destroy'
+					%br
+					%span.time_ago= fa_icon('clock-o',text: time_ago_in_words(notice.created_at))
+		- else
+			.Nothing-found{style: 'display:block;width:50%;margin-left:auto;margin-right:auto;text-align:center;color:#848484;'}
+				%h4 Nothing to Show here yet
+				= fa_icon('bell-o 2x')
